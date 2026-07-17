@@ -70,7 +70,7 @@ semgrep:
   variables:
     SEMGREP_RULES: p/javascript
   script:
-    - semgrep ci -o semgrep.json
+    - semgrep ci --json -o semgrep.json
   allow_failure: true
   artifacts:
     when: always
