@@ -57,12 +57,12 @@ njsscan:
   before_script:
     - pip3 install --upgrade njsscan
   script:
-    - njsscan --exit-warning . --json -o njsscan.json
+    - njsscan --exit-warning . --sarif -o njsscan.sarif
   allow_failure: true
   artifacts:
     when: always
     paths:
-      - njsscan.json
+      - njsscan.sarif
 
 semgrep:
   stage: test
