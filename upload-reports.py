@@ -13,8 +13,8 @@ headers = {
 url = 'https://demo.defectdojo.org/api/v2/import-scan/'
 
 data = {
-    'active': true,
-    'verified': true,
+    'active': True,
+    'verified': True,
     'scan_type': 'Gitleaks Scan',
     'minimum_severity': 'Low',
     'engagement': '27',
