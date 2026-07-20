@@ -10,16 +10,14 @@ headers = {
     'Authorization': f'Token {api_key}'
 }
 
-url = 'https://demo.defectdojo.org/api/v2/import-scan'
+url = 'https://demo.defectdojo.org/api/v2/import-scan/'
 
 data = {
-    'product_type_name': 'Security app',
-    'product_name': 'Juice Shop',
-    'active': True,
-    'verified': True,
+    'active': true,
+    'verified': true,
     'scan_type': 'Gitleaks Scan',
     'minimum_severity': 'Low',
-    'engagement': 27,
+    'engagement': '27',
     
 }
 
