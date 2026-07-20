@@ -1,5 +1,19 @@
 import os
 import requests
+import sys
+
+file_name = sys.argv[1]
+scan_type = ''
+
+match file_name:
+    case "gitleaks.json":
+        scan_type = "Gitleaks Scan"
+    case "njsscan.sarif":
+        scan_type = "SARIF"
+    case "semgrep.json":
+        scan_type = "Semgrep JSON Report"
+    case _:
+        print("Comando no reconocido")
 
 api_key = os.environ.get('DEFECTDOJO_API_KEY')
 
@@ -15,13 +29,13 @@ url = 'https://demo.defectdojo.org/api/v2/import-scan/'
 data = {
     'active': True,
     'verified': True,
-    'scan_type': 'Gitleaks Scan',
+    'scan_type': scan_type,
     'minimum_severity': 'Low',
     'engagement': '27',
     
 }
 
-with open('gitleaks.json', 'rb') as f:
+with open(file_name, 'rb') as f:
     files = {
         'file': f
     }
