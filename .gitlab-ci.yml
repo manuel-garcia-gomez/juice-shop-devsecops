@@ -100,7 +100,7 @@ retire:
 
 upload_reports:
   stage: test
-  image: python
+  image: python:3.14-slim
   needs: ["gitleaks", "njsscan", "semgrep", "retire"]
   when: always
   before_script:
