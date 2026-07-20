@@ -17,14 +17,14 @@ data = {
     'verified': True,
     'scan_type': 'Gitleaks Scan',
     'minimum_severity': 'Low',
-    'engagement': 19
+    'engagement': 27
 }
 
 with open('gitleaks.json', 'rb') as f:
     files = {
         'file': f
     }
-    
+
     response = requests.post(url, headers=headers, data=data, files=files)
 
 if response.status_code == 201:
