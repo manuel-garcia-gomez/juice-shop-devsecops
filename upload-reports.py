@@ -24,7 +24,8 @@ with open('gitleaks.json', 'rb') as f:
     files = {
         'file': f
     }
-response = requests.post(url, headers=headers, data=data, files=files)
+    
+    response = requests.post(url, headers=headers, data=data, files=files)
 
 if response.status_code == 201:
     print('Scan results imported successfully')
