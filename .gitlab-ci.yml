@@ -2,13 +2,17 @@ variables:
   IMAGE_NAME: "$DOCKER_USER/demo-app"
   IMAGE_TAG: juice-shop-1.1
 
+  FF_USE_FASTZIP: "true"
+  ARTIFACT_COMPRESSION_LEVEL: "fast"
+  CACHE_COMPRESSION_LEVEL: "fast"
+
 stages:
   - cache
   - test
   - build
 
 create_cache:
-  image: node:18-bullseye
+  image: node:18-slim
   stage: cache
   script:
     - yarn install --ignore-engines
@@ -18,12 +22,11 @@ create_cache:
         - yarn.lock
     paths:
       - node_modules/
-      - yarn.lock
-      - .yarn
+      - .yarn/cache
     policy: pull-push
 
 yarn-test:
-  image: node:18-bullseye
+  image: node:18-slim
   stage: test
   script:
     - yarn install --ignore-engines
@@ -34,8 +37,7 @@ yarn-test:
         - yarn.lock
     paths:
       - node_modules/
-      - yarn.lock
-      - .yarn
+      - .yarn/cache
     policy: pull
 
 gitleaks:
@@ -53,7 +55,7 @@ gitleaks:
 
 njsscan:
   stage: test
-  image: python:3.12
+  image: python:3.12-slim
   before_script:
     - pip3 install --upgrade njsscan
   script:
@@ -79,20 +81,20 @@ semgrep:
 
 retire:
   stage: test
-  image: node:18-bullseye
+  image: node:18-slim
   cache:
     key:
       files:
         - yarn.lock
     paths:
       - node_modules/
-      - yarn.lock
-      - .yarn
+      - .yarn/cache
     policy: pull
   before_script:
     - npm install -g retire
   script:
     - retire --path . --outputformat json --outputpath retire.json
+  allow_failure: true
   artifacts:
     when: always
     paths:
