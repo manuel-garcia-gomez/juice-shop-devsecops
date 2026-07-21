@@ -12,6 +12,8 @@ match file_name:
         scan_type = "SARIF"
     case "semgrep.json":
         scan_type = "Semgrep JSON Report"
+    case "retire.json":
+        scan_type = "Retire.js Scan"
     case _:
         print("Comando no reconocido")
 
