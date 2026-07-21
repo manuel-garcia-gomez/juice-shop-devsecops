@@ -4,11 +4,6 @@ variables:
   AWS_DEFAULT_REGION: $AWS_DEFAULT_REGION
   AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
   IMAGE_NAME: "$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/juice-shop-devsecops"
-  
-
-  FF_USE_FASTZIP: "true"
-  ARTIFACT_COMPRESSION_LEVEL: "fast"
-  CACHE_COMPRESSION_LEVEL: "fast"
 
 stages:
   - cache
@@ -16,7 +11,7 @@ stages:
   - build
 
 create_cache:
-  image: node:18-slim
+  image: node:18-bullseye
   stage: cache
   script:
     - yarn install --ignore-engines
@@ -26,11 +21,12 @@ create_cache:
         - yarn.lock
     paths:
       - node_modules/
-      - .yarn/cache
+      - yarn.lock
+      - .yarn
     policy: pull-push
 
 yarn-test:
-  image: node:18-slim
+  image: node:18-bullseye
   stage: test
   script:
     - yarn install --ignore-engines
@@ -41,7 +37,8 @@ yarn-test:
         - yarn.lock
     paths:
       - node_modules/
-      - .yarn/cache
+      - yarn.lock
+      - .yarn
     policy: pull
 
 gitleaks:
@@ -59,7 +56,7 @@ gitleaks:
 
 njsscan:
   stage: test
-  image: python:3.12-slim
+  image: python:3.12
   before_script:
     - pip3 install --upgrade njsscan
   script:
@@ -85,20 +82,20 @@ semgrep:
 
 retire:
   stage: test
-  image: node:18-slim
+  image: node:18-bullseye
   cache:
     key:
       files:
         - yarn.lock
     paths:
       - node_modules/
-      - .yarn/cache
+      - yarn.lock
+      - .yarn
     policy: pull
   before_script:
     - npm install -g retire
   script:
     - retire --path . --outputformat json --outputpath retire.json
-  allow_failure: true
   artifacts:
     when: always
     paths:
@@ -106,7 +103,7 @@ retire:
 
 upload_reports:
   stage: test
-  image: python:3.14-slim
+  image: python
   needs: ["gitleaks", "njsscan", "semgrep", "retire"]
   when: always
   before_script:
