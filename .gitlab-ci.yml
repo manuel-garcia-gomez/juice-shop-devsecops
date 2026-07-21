@@ -1,0 +1,59 @@
+variables:
+  IMAGE_NAME: "$DOCKER_USER/demo-app"
+  IMAGE_TAG: juice-shop-1.1
+
+stages:
+  - cache
+  - test
+  - build
+
+create_cache:
+  image: node:18-bullseye
+  stage: cache
+  script:
+    - yarn install --ignore-engines
+  cache:
+    key:
+      files:
+        - yarn.lock
+    paths:
+      - node_modules/
+      - yarn.lock
+      - .yarn
+    policy: pull-push
+
+yarn-test:
+  image: node:18-bullseye
+  stage: test
+  script:
+    - yarn install --ignore-engines
+    - yarn test
+  cache:
+    key:
+      files:
+        - yarn.lock
+    paths:
+      - node_modules/
+      - yarn.lock
+      - .yarn
+    policy: pull-push
+
+gitleaks-scan:
+  stage: test
+  image:
+    name: zricethezav/gitleaks
+    entrypoint: [""]
+  script:
+    - gitleaks detect --verbose --source .
+  allow_failure: true
+
+build_image:
+  stage: build
+  image: docker:24
+  services:
+    - docker:24-dind
+  before_script:
+    - echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
+  script:
+    - docker build -t "$IMAGE_NAME:$IMAGE_TAG" .
+    - docker push "$IMAGE_NAME:$IMAGE_TAG"
