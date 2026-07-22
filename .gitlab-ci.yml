@@ -101,34 +101,28 @@ retire:
     paths:
       - retire.json
 
-upload_reports:
-  stage: test
-  image: python
-  needs: ["gitleaks", "njsscan", "semgrep", "retire"]
-  when: always
-  before_script:
-    - pip3 install requests
-  script:
-    - python3 upload-reports.py gitleaks.json
-    - python3 upload-reports.py njsscan.sarif
-    - python3 upload-reports.py semgrep.json
-    - python3 upload-reports.py retire.json
+# upload_reports:
+#   stage: test
+#   image: python
+#   needs: ["gitleaks", "njsscan", "semgrep", "retire"]
+#   when: always
+#   before_script:
+#     - pip3 install requests
+#   script:
+#     - python3 upload-reports.py gitleaks.json
+#     - python3 upload-reports.py njsscan.sarif
+#     - python3 upload-reports.py semgrep.json
+#     - python3 upload-reports.py retire.json
 
 build_image:
   stage: build
   image: docker:24
   services:
     - docker:24-dind
-  variables:
-    AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
-    AWS_ACCOUNT_ID: $AWS_ACCOUNT_ID
-    AWS_DEFAULT_REGION: $AWS_DEFAULT_REGION
-    AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
   before_script:
-    - apk --no-cache add python3 py3-pip
-    - pip3 install --no-cache-dir awscli
+    - apk --no-cache add aws-cli
     - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
   script:
-    - docker build -t "$IMAGE_NAME:$CI_COMMIT_SHA -t $IMAGE_NAME:latest" .
+    - docker build -t "$IMAGE_NAME:$CI_COMMIT_SHA" -t "$IMAGE_NAME:latest" .
     - docker push "$IMAGE_NAME:$CI_COMMIT_SHA"
     - docker push "$IMAGE_NAME:latest"
