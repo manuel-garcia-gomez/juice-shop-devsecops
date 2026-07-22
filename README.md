@@ -12,7 +12,7 @@ The vulnerable web application used as the target for this pipeline is the [OWAS
 * **SAST (Static Application Security Testing):** NJSScan, Semgrep
 * **SCA (Software Composition Analysis):** RetireJS
 * **Vulnerability Management:** DefectDojo, Python (API Automation)
-* **Cloud & Containerization:** Docker, AWS ECR, AWS IAM
+* **Cloud & Containerization:** Docker, AWS ECR, AWS IAM, AWS EC2
 
 ---
 
@@ -32,6 +32,8 @@ This project was built iteratively, focusing on Shift-Left security principles. 
    * Added automated Software Composition Analysis using **RetireJS** to identify vulnerabilities in third-party dependencies, feeding the results into DefectDojo.
 6. [**Phase 6: Automated Delivery to AWS ECR**](https://github.com/manuel-garcia-gomez/juice-shop-devsecops/pull/7)
    * Secured **AWS IAM** credentials within CI/CD variables and optimized the pipeline to build and push the containerized application to **AWS Elastic Container Registry**.
+7. [**Phase 7: Continuous Deployment to AWS EC2**](https://github.com/manuel-garcia-gomez/juice-shop-devsecops/pull/9)
+   * Configured a GitLab CI deployment job to securely connect to an **AWS EC2** instance via SSH, pull the latest image directly from ECR, and automatically launch the updated Docker container.
 
 ---
 
