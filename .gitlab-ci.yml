@@ -117,8 +117,6 @@ retire:
 build_image:
   stage: build
   image: docker:24
-  services:
-    - docker:24-dind
   before_script:
     - apk update && apk upgrade
     - apk --no-cache add aws-cli
