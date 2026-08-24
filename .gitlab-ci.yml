@@ -118,13 +118,10 @@ retire:
 
 build_image:
   stage: build
-  image: docker:24
-  services:
-    - docker:24-dind
+  tags:
+    - ec2
+    - shell
   before_script:
-    - apk update && apk upgrade
-    - apk --no-cache add aws-cli
-    - aws --version
     - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
   script:
     - docker build -t "$IMAGE_NAME:$CI_COMMIT_SHA" -t "$IMAGE_NAME:latest" .
