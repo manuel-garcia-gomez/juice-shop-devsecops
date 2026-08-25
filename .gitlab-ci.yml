@@ -136,7 +136,7 @@ trivy:
     - docker:24-dind
   before_script:
     - apk update && apk upgrade
-    - apk --no-cache add aws-cli
+    - apk --no-cache add aws-cli curl
     - aws --version
     - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
     - curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin v0.74.0
