@@ -11,6 +11,7 @@ The vulnerable web application used as the target for this pipeline is the [OWAS
 * **Secret Scanning:** GitLeaks
 * **SAST (Static Application Security Testing):** NJSScan, Semgrep
 * **SCA (Software Composition Analysis):** RetireJS
+* **Container Scanning:** Trivy
 * **Vulnerability Management:** DefectDojo, Python (API Automation)
 * **Cloud & Containerization:** Docker, AWS ECR, AWS IAM, AWS EC2
 
@@ -36,6 +37,8 @@ This project was built iteratively, focusing on Shift-Left security principles. 
    * Configured a GitLab CI deployment job to securely connect to an **AWS EC2** instance via SSH, pull the latest image directly from ECR, and automatically launch the updated Docker container.
 8. [**Phase 8: Self-Managed GitLab Runner on AWS EC2**](https://github.com/manuel-garcia-gomez/juice-shop-devsecops/pull/10)
    * Provisioned an **AWS EC2** instance to register a project-level **self-managed GitLab Runner** using a **Shell executor** for direct host execution and host-level build layer reuse.
+9. [**Phase 9: Container Image Scanning with Trivy**](https://github.com/manuel-garcia-gomez/juice-shop-devsecops/pull/11)
+   * Integrated **Trivy** into the CI/CD pipeline to scan Docker images pulled from **AWS ECR**, failing the job strictly on **HIGH** or **CRITICAL** severity vulnerabilities.
 
 ---
 
