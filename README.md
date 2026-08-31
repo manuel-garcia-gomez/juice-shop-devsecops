@@ -39,6 +39,8 @@ This project was built iteratively, focusing on Shift-Left security principles. 
    * Provisioned an **AWS EC2** instance to register a project-level **self-managed GitLab Runner** using a **Shell executor** for direct host execution and host-level build layer reuse.
 9. [**Phase 9: Container Image Scanning with Trivy**](https://github.com/manuel-garcia-gomez/juice-shop-devsecops/pull/11)
    * Integrated **Trivy** into the CI/CD pipeline to scan Docker images pulled from **AWS ECR**, failing the job strictly on **HIGH** or **CRITICAL** severity vulnerabilities.
+10. [**Phase 10: Automate Trivy Scan Upload to DefectDojo**](https://github.com/manuel-garcia-gomez/juice-shop-devsecops/pull/12)
+   * Configured **Trivy** to export scan artifacts and updated the custom **Python API script** to automatically ingest container vulnerability findings into **DefectDojo**.
 
 ---
 
