@@ -41,6 +41,8 @@ This project was built iteratively, focusing on Shift-Left security principles. 
    * Integrated **Trivy** into the CI/CD pipeline to scan Docker images pulled from **AWS ECR**, failing the job strictly on **HIGH** or **CRITICAL** severity vulnerabilities.
 10. [**Phase 10: Automate Trivy Scan Upload to DefectDojo**](https://github.com/manuel-garcia-gomez/juice-shop-devsecops/pull/12)
    * Configured **Trivy** to export scan artifacts and updated the custom **Python API script** to automatically ingest container vulnerability findings into **DefectDojo**.
+11. [**Phase 11: Enforce AWS IAM Least Privilege for ECR**](https://github.com/manuel-garcia-gomez/juice-shop-devsecops/pull/13)
+   * Replaced administrative cloud credentials with a dedicated **AWS IAM** service user scoped with a minimal permission policy for **AWS ECR** interaction.
 
 ---
 
