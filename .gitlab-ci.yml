@@ -24,27 +24,9 @@ deploy_image:
   tags:
     - shell
     - ec2
-  variables:
-    INSTANCE_ID: "i-00fef952b853e73b9"
   script:
-    - |
-      LOGIN_CMD="aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com"
-    - |
-      DEPLOY_CMD="docker pull $IMAGE_NAME:latest && (docker stop juice-shop || true) && (docker rm juice-shop || true) && docker run -d --name juice-shop -p 3000:3000 $IMAGE_NAME:latest"
-    - |
-      printf '{"commands":["%s","%s"]}' "$LOGIN_CMD" "$DEPLOY_CMD" > ssm-params.json
-      cat ssm-params.json
-    - |
-      COMMAND_ID=$(aws ssm send-command \
-        --instance-ids "$INSTANCE_ID" \
-        --document-name "AWS-RunShellScript" \
-        --parameters file://ssm-params.json \
-        --query "Command.CommandId" --output text)
-      echo "CommandId: $COMMAND_ID"
-    - |
-      aws ssm wait command-executed --command-id "$COMMAND_ID" --instance-id "$INSTANCE_ID" || true
-    - |
-      aws ssm get-command-invocation --command-id "$COMMAND_ID" --instance-id "$INSTANCE_ID" \
-        --query "{Status:Status,Out:StandardOutputContent,Err:StandardErrorContent}" --output text
-      STATUS=$(aws ssm get-command-invocation --command-id "$COMMAND_ID" --instance-id "$INSTANCE_ID" --query "Status" --output text)
-      [ "$STATUS" = "Success" ] || exit 1
+    - LOG_IN_CMD="export AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION; export AWS_ACCOUNT_ID=$AWS_ACCOUNT_ID; aws ecr get-login-password | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com"
+    - COMMANDS_TO_EXECUTE="docker pull $IMAGE_NAME:latest && (docker stop juice-shop || true) && (docker rm juice-shop || true) && docker run -d --name juice-shop -p 3000:3000 $IMAGE_NAME:latest"
+    - COMMAND_ID=$(aws ssm send-command --instance-ids "i-00fef952b853e73b9" --document-name "AWS-RunShellScript" --parameters "commands=[$LOG_IN_CMD, $COMMANDS_TO_EXECUTE]" --query "Command.CommandId" --output text)
+    - sleep 15
+    - aws ssm get-command-invocation --command-id "$COMMAND_ID" --instance-id "i-00fef952b853e73b9"
