@@ -13,7 +13,7 @@ The vulnerable web application used as the target for this pipeline is the [OWAS
 * **SCA (Software Composition Analysis):** RetireJS
 * **Container Scanning:** Trivy
 * **Vulnerability Management:** DefectDojo, Python (API Automation)
-* **Cloud & Containerization:** Docker, AWS ECR, AWS IAM, AWS EC2
+* **Cloud & Containerization:** Docker, AWS ECR, AWS IAM, AWS EC2, AWS SSM
 
 ---
 
@@ -43,6 +43,8 @@ This project was built iteratively, focusing on Shift-Left security principles. 
    * Configured **Trivy** to export scan artifacts and updated the custom **Python API script** to automatically ingest container vulnerability findings into **DefectDojo**.
 11. [**Phase 11: Enforce AWS IAM Least Privilege for ECR**](https://github.com/manuel-garcia-gomez/juice-shop-devsecops/pull/13)
    * Replaced administrative cloud credentials with a dedicated **AWS IAM** service user scoped with a minimal permission policy for **AWS ECR** interaction.
+12. [**Phase 12: Zero-Trust EC2 Deployment via AWS SSM**](https://github.com/manuel-garcia-gomez/juice-shop-devsecops/pull/14)
+   * Removed public SSH access from the deployment EC2 instance and refactored the **GitLab CI/CD** pipeline to execute container deployments securely using **AWS Systems Manager (SSM)**.
 
 ---
 
