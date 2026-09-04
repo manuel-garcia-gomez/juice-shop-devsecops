@@ -14,6 +14,8 @@ match file_name:
         scan_type = "Semgrep JSON Report"
     case "retire.json":
         scan_type = "Retire.js Scan"
+    case "trivy.json":
+            scan_type = "Trivy Scan"
     case _:
         print("Comando no reconocido")
 
@@ -33,7 +35,7 @@ data = {
     'verified': True,
     'scan_type': scan_type,
     'minimum_severity': 'Low',
-    'engagement': '27'
+    'engagement': '21'
 }
 
 with open(file_name, 'rb') as f:
