@@ -12,6 +12,7 @@ The vulnerable web application used as the target for this pipeline is the [OWAS
 * **SAST (Static Application Security Testing):** NJSScan, Semgrep
 * **SCA (Software Composition Analysis):** RetireJS
 * **Container Scanning:** Trivy
+* **DAST (Dynamic Application Security Testing):** OWASP ZAP
 * **Vulnerability Management:** DefectDojo, Python (API Automation)
 * **Cloud & Containerization:** Docker, AWS ECR, AWS IAM, AWS EC2, AWS SSM
 
@@ -40,11 +41,13 @@ This project was built iteratively, focusing on Shift-Left security principles. 
 9. [**Phase 9: Container Image Scanning with Trivy**](https://github.com/manuel-garcia-gomez/juice-shop-devsecops/pull/11)
    * Integrated **Trivy** into the CI/CD pipeline to scan Docker images pulled from **AWS ECR**, failing the job strictly on **HIGH** or **CRITICAL** severity vulnerabilities.
 10. [**Phase 10: Automate Trivy Scan Upload to DefectDojo**](https://github.com/manuel-garcia-gomez/juice-shop-devsecops/pull/12)
-   * Configured **Trivy** to export scan artifacts and updated the custom **Python API script** to automatically ingest container vulnerability findings into **DefectDojo**.
+    * Configured **Trivy** to export scan artifacts and updated the custom **Python API script** to automatically ingest container vulnerability findings into **DefectDojo**.
 11. [**Phase 11: Enforce AWS IAM Least Privilege for ECR**](https://github.com/manuel-garcia-gomez/juice-shop-devsecops/pull/13)
-   * Replaced administrative cloud credentials with a dedicated **AWS IAM** service user scoped with a minimal permission policy for **AWS ECR** interaction.
+    * Replaced administrative cloud credentials with a dedicated **AWS IAM** service user scoped with a minimal permission policy for **AWS ECR** interaction.
 12. [**Phase 12: Zero-Trust EC2 Deployment via AWS SSM**](https://github.com/manuel-garcia-gomez/juice-shop-devsecops/pull/14)
-   * Removed public SSH access from the deployment EC2 instance and refactored the **GitLab CI/CD** pipeline to execute container deployments securely using **AWS Systems Manager (SSM)**.
+    * Removed public SSH access from the deployment EC2 instance and refactored the **GitLab CI/CD** pipeline to execute container deployments securely using **AWS Systems Manager (SSM)**.
+13. [**Phase 13: Dynamic Application Security Testing (DAST) with OWASP ZAP**](https://github.com/manuel-garcia-gomez/juice-shop-devsecops/pull/15)
+    * Configured automated **OWASP ZAP** DAST scans against live **AWS EC2** deployments, failing builds on critical finding thresholds and exporting scan results as artifacts.
 
 ---
 
