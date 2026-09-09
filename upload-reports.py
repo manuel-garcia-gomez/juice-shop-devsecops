@@ -35,7 +35,7 @@ data = {
     'verified': True,
     'scan_type': scan_type,
     'minimum_severity': 'Low',
-    'engagement': '21'
+    'engagement': '19'
 }
 
 with open(file_name, 'rb') as f:
