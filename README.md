@@ -4,6 +4,7 @@
 This repository showcases the implementation of a complete, automated **DevSecOps CI/CD pipeline**. The goal of this project is to demonstrate how to secure a software supply chain by integrating multiple security testing tools and automated deployment strategies into a modern development workflow.
 
 The vulnerable web application used as the target for this pipeline is the [OWASP Juice Shop](https://owasp-juice.shop).
+Infrastructure provisioning code is maintained separately in the [juice-shop-infra-automation](https://github.com/manuel-garcia-gomez/juice-shop-infra-automation) repository.
 
 ## 🛠️ Technologies & Tools
 * **CI/CD:** GitLab CI, GitLab Runner (Self-Managed)
@@ -14,7 +15,7 @@ The vulnerable web application used as the target for this pipeline is the [OWAS
 * **Container Scanning:** Trivy
 * **DAST (Dynamic Application Security Testing):** OWASP ZAP
 * **Vulnerability Management:** DefectDojo, Python (API Automation)
-* **Cloud & Containerization:** Docker, AWS ECR, AWS IAM, AWS EC2, AWS SSM
+* **Cloud & IaC:** Terraform, Docker, AWS ECR, AWS IAM, AWS EC2, AWS SSM
 
 ---
 
@@ -48,6 +49,8 @@ This project was built iteratively, focusing on Shift-Left security principles. 
     * Removed public SSH access from the deployment EC2 instance and refactored the **GitLab CI/CD** pipeline to execute container deployments securely using **AWS Systems Manager (SSM)**.
 13. [**Phase 13: Dynamic Application Security Testing (DAST) with OWASP ZAP**](https://github.com/manuel-garcia-gomez/juice-shop-devsecops/pull/15)
     * Configured automated **OWASP ZAP** DAST scans against live **AWS EC2** deployments, failing builds on critical finding thresholds and exporting scan results as artifacts.
+14. [**Phase 14: Infrastructure as Code (IaC) Provisioning with Terraform**](https://github.com/manuel-garcia-gomez/juice-shop-devsecops/pull/16)
+    * Automated the provisioning of **AWS VPC**, security groups, IAM roles, and **EC2** instances using **Terraform** in the dedicated [**juice-shop-infra-automation**](https://github.com/manuel-garcia-gomez/juice-shop-infra-automation) repository.
 
 ---
 
