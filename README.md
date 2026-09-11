@@ -51,6 +51,8 @@ This project was built iteratively, focusing on Shift-Left security principles. 
     * Configured automated **OWASP ZAP** DAST scans against live **AWS EC2** deployments, failing builds on critical finding thresholds and exporting scan results as artifacts.
 14. [**Phase 14: Infrastructure as Code (IaC) Provisioning with Terraform**](https://github.com/manuel-garcia-gomez/juice-shop-devsecops/pull/16)
     * Automated the provisioning of **AWS VPC**, security groups, IAM roles, and **EC2** instances using **Terraform** in the dedicated [**juice-shop-infra-automation**](https://github.com/manuel-garcia-gomez/juice-shop-infra-automation) repository.
+15. [**Phase 15: GitOps Infrastructure Pipeline & IaC Security Scanning**](https://github.com/manuel-garcia-gomez/juice-shop-infra-automation/pull/1)
+    * Automated infrastructure management in the dedicated [**juice-shop-infra-automation**](https://github.com/manuel-garcia-gomez/juice-shop-infra-automation) repository using **Terraform**, **AWS S3** remote state, **Trivy** IaC security scanning, and **GitLab CI/CD**.
 
 ---
 
