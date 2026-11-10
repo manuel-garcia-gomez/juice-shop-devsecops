@@ -177,7 +177,7 @@ restoreOverwrittenFilesWithOriginals().then(() => {
   app.disable('x-powered-by')
   app.use(permissionsPolicy({
     features: {
-      payment: ["'self'"]
+      payment: ['self']
     }
   }))
 
